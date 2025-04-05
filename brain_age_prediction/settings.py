@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Static files (CSS, JS)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files (for uploaded MRI .nii files)
 import os
@@ -34,12 +35,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$#2_)tskz07)&gpj9k-2q20p1-wc-h5u!go1yx^d0+fgj)(uz4'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-fallback')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
