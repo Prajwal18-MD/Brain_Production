@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Brain Age Prediction - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap & AOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: #00c6ff;
+            border: none;
+        }
+
+        .dark-mode {
+            background: #121212 !important;
+            color: #f1f1f1 !important;
+        }
+
+        .navbar-brand lottie-player {
+            margin-right: 10px;
+        }
+
+        .brain-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;  /* Adjust height as per your layout */
+            overflow: hidden;
+        }
+        
+        .brain-animation {
+            width: 500px;
+            height: 320px;
+            margin: auto;
+        }
+        
+        .zoom-animation {
+            animation: zoomInOut 2s infinite alternate;
+        }
+        
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.2);
+            }
+        }
+        
+
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json"
+                    background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+                Brain Age
+            </a>
+            <button class="btn btn-outline-light" onclick="toggleDarkMode()">🌙 / ☀️</button>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mt-5 text-center" data-aos="fade-up">
+        <div class="glass-card">
+            <h1 class="display-4">Welcome to Brain Age Prediction</h1>
+            <p class="lead">Upload your MRI scans and predict brain age with AI.</p>
+
+            <!-- 3D Brain Animation -->
+            <div class="brain-animation my-4">
+                <img src="https://pngimg.com/uploads/brain/brain_PNG71.png" alt="Brain Image" class="zoom-animation" style="max-width: 300px;">
+            </div>
+
+            <a href="{% url 'upload_mri' %}" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+        &copy; 2025 Brain Age | Designed by <b>Big Brains</b>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init();
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.navbar').classList.toggle('bg-dark');
+            document.querySelector('.glass-card').classList.toggle('bg-secondary');
+        }
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('mode', isDark ? 'dark' : 'default');
+          }
+        
+          window.onload = function () {
+            const mode = localStorage.getItem('mode');
+            if (mode === 'dark') {
+              document.body.classList.add('dark-mode');
+            }
+          }     
+    </script>
+
+</body>
+
+</html>

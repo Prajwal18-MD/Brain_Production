@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Brain Age - Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap & AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      color: #fff;
+      margin-top: 50px;
+    }
+
+    .btn-primary {
+      background: #00c6ff;
+      border: none;
+    }
+
+    /* Dark mode styling to match upload.html */
+    .dark-mode {
+      background: #121212 !important;
+      color: #f1f1f1 !important;
+    }
+
+    /* Ensure inner elements adjust accordingly */
+    .dark-mode .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f1f1f1;
+    }
+    .dark-mode footer {
+      color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent"
+          speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+        <span class="ms-2">Brain Age</span>
+      </a>
+
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-light me-3" onclick="toggleDarkMode()">🌙 / ☀️</button>
+        <a href="/" class="btn btn-outline-info me-2">Home</a>
+        <a href="{% url 'upload_mri' %}" class="btn btn-outline-info me-2">Upload</a>
+        <a href="{% url 'results' %}" class="btn btn-outline-info">Results</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Prediction Content -->
+  <div class="container">
+    <div class="glass-card" data-aos="fade-up">
+      <h2 class="text-center mb-4">Brain 3D Visualization</h2>
+
+      <!-- Integrated MRI file selection form -->
+      <form method="POST" action="{% url 'predict' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Select MRI File:</label>
+          <select class="form-select" name="selected_file" required>
+            {% for file in nii_files %}
+            <option value="{{ file }}" {% if file == selected_file %}selected{% endif %}>{{ file }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg mb-4">Visualize</button>
+      </form>
+
+      <!-- Display the 3D Plot if available -->
+      {% if plot_div %}
+      <div>
+        {{ plot_div|safe }}
+      </div>
+      {% elif error %}
+      <div class="alert alert-danger mt-3">
+        {{ error }}
+      </div>
+      {% endif %}
+
+      <!-- Go Back / Exit button -->
+      <div class="mt-4 text-center">
+        <a href="{% url 'upload_mri' %}" class="btn btn-outline-light">Go Back</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center py-4 mt-5">
+    &copy; 2025 Brain Age | Designed by <b>Big Brains</b>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <script>
+    AOS.init();
+
+    // Toggle dark mode exactly as in upload.html
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('mode', isDark ? 'dark' : 'default');
+    }
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('mode', isDark ? 'dark' : 'default');
+      }
+    
+      window.onload = function () {
+        const mode = localStorage.getItem('mode');
+        if (mode === 'dark') {
+          document.body.classList.add('dark-mode');
+        }
+      }
+  </script>
+
+</body>
+
+</html>

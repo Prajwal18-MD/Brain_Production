@@ -1,0 +1,1 @@
+web: gunicorn brain_age_prediction.wsgi
