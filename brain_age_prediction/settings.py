@@ -42,8 +42,8 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-CSRF_TRUSTED_ORIGINS = ['https://brain-production.onrender.com/',
-                        'https://web-production-dfd1.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://brain-production.onrender.com',
+                        'https://web-production-dfd1.up.railway.app']
 
 
 
